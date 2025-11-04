@@ -1,0 +1,47 @@
+<%- include('../../partials/header') %>
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h2>Danh sách Customers</h2>
+        <a href="/admin/customers/create" class="btn btn-primary">Thêm Customer</a>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Created At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (customers && customers.length > 0) { %>
+                <% customers.forEach(customer => { %>
+                    <tr>
+                        <td><%= customer.Id %></td>
+                        <td><%= customer.FirstName %></td>
+                        <td><%= customer.LastName %></td>
+                        <td><%= customer.Email %></td>
+                        <td><%= customer.Phone %></td>
+                        <td><%= customer.CreatedAt ? new Date(customer.CreatedAt).toLocaleString('vi-VN') : '' %></td>
+                        <td class="actions">
+                            <a href="/admin/customers/<%= customer.Id %>/edit" class="btn btn-secondary">Sửa</a>
+                            <form action="/admin/customers/<%= customer.Id %>/delete" method="POST" class="delete-form" onsubmit="return confirm('Bạn có chắc muốn xóa customer này?');">
+                                <button type="submit" class="btn btn-danger">Xóa</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            <% } else { %>
+                <tr>
+                    <td colspan="7" style="text-align: center; padding: 2rem;">Không có dữ liệu</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+<%- include('../../partials/footer') %>
+

@@ -1,0 +1,51 @@
+<%- include('../../partials/header') %>
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h2>Danh sách Accounts</h2>
+        <a href="/admin/accounts/create" class="btn btn-primary">Thêm Account</a>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Username</th>
+                <th>Is Active</th>
+                <th>Created At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (accounts && accounts.length > 0) { %>
+                <% accounts.forEach(account => { %>
+                    <tr>
+                        <td><%= account.Id %></td>
+                        <td><%= account.FirstName %> <%= account.LastName %> (<%= account.Email %>)</td>
+                        <td><%= account.Username %></td>
+                        <td>
+                            <% if (account.IsActive) { %>
+                                <span class="badge badge-active">Active</span>
+                            <% } else { %>
+                                <span class="badge badge-inactive">Inactive</span>
+                            <% } %>
+                        </td>
+                        <td><%= account.CreatedAt ? new Date(account.CreatedAt).toLocaleString('vi-VN') : '' %></td>
+                        <td class="actions">
+                            <a href="/admin/accounts/<%= account.Id %>/edit" class="btn btn-secondary">Sửa</a>
+                            <form action="/admin/accounts/<%= account.Id %>/delete" method="POST" class="delete-form" onsubmit="return confirm('Bạn có chắc muốn xóa account này?');">
+                                <button type="submit" class="btn btn-danger">Xóa</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            <% } else { %>
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 2rem;">Không có dữ liệu</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+<%- include('../../partials/footer') %>
+

@@ -1,0 +1,55 @@
+<%- include('../../partials/header') %>
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h2>Danh sách Orders</h2>
+        <a href="/admin/orders/create" class="btn btn-primary">Thêm Order</a>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Order Date</th>
+                <th>Total Amount</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (orders && orders.length > 0) { %>
+                <% orders.forEach(order => { %>
+                    <tr>
+                        <td><%= order.Id %></td>
+                        <td><%= order.FirstName %> <%= order.LastName %> (<%= order.Email %>)</td>
+                        <td><%= order.OrderDate ? new Date(order.OrderDate).toLocaleString('vi-VN') : '' %></td>
+                        <td><%= order.TotalAmount ? parseFloat(order.TotalAmount).toLocaleString('vi-VN') + ' đ' : '0 đ' %></td>
+                        <td>
+                            <% if (order.Status === 'Completed' || order.Status === 'Success') { %>
+                                <span class="badge badge-success"><%= order.Status %></span>
+                            <% } else if (order.Status === 'Pending') { %>
+                                <span class="badge badge-pending"><%= order.Status %></span>
+                            <% } else if (order.Status === 'Cancelled') { %>
+                                <span class="badge badge-cancelled"><%= order.Status %></span>
+                            <% } else { %>
+                                <span class="badge"><%= order.Status %></span>
+                            <% } %>
+                        </td>
+                        <td class="actions">
+                            <a href="/admin/orders/<%= order.Id %>/edit" class="btn btn-secondary">Sửa</a>
+                            <form action="/admin/orders/<%= order.Id %>/delete" method="POST" class="delete-form" onsubmit="return confirm('Bạn có chắc muốn xóa order này?');">
+                                <button type="submit" class="btn btn-danger">Xóa</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            <% } else { %>
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 2rem;">Không có dữ liệu</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+<%- include('../../partials/footer') %>
+

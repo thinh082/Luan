@@ -1,0 +1,42 @@
+<%- include('../../partials/header') %>
+<div class="card">
+    <h2>Sửa Account</h2>
+    
+    <form action="/admin/accounts/<%= account.Id %>/edit" method="POST">
+        <div class="form-group">
+            <label for="customerId">Customer *</label>
+            <select id="customerId" name="customerId" required>
+                <option value="">-- Chọn Customer --</option>
+                <% if (customers && customers.length > 0) { %>
+                    <% customers.forEach(customer => { %>
+                        <option value="<%= customer.Id %>" <%= customer.Id == account.CustomerId ? 'selected' : '' %>><%= customer.FirstName %> <%= customer.LastName %> (<%= customer.Email %>)</option>
+                    <% }); %>
+                <% } %>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="username">Username *</label>
+            <input type="text" id="username" name="username" value="<%= account.Username %>" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="passwordHash">Password Hash *</label>
+            <input type="text" id="passwordHash" name="passwordHash" value="<%= account.PasswordHash %>" required>
+        </div>
+        
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="isActive" value="true" <%= account.IsActive ? 'checked' : '' %>>
+                Is Active
+            </label>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+            <a href="/admin/accounts" class="btn btn-secondary">Hủy</a>
+        </div>
+    </form>
+</div>
+<%- include('../../partials/footer') %>
+

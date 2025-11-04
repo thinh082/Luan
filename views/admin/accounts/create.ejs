@@ -1,0 +1,42 @@
+<%- include('../../partials/header') %>
+<div class="card">
+    <h2>Thêm Account mới</h2>
+    
+    <form action="/admin/accounts/create" method="POST">
+        <div class="form-group">
+            <label for="customerId">Customer *</label>
+            <select id="customerId" name="customerId" required>
+                <option value="">-- Chọn Customer --</option>
+                <% if (customers && customers.length > 0) { %>
+                    <% customers.forEach(customer => { %>
+                        <option value="<%= customer.Id %>"><%= customer.FirstName %> <%= customer.LastName %> (<%= customer.Email %>)</option>
+                    <% }); %>
+                <% } %>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="username">Username *</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="passwordHash">Password Hash *</label>
+            <input type="text" id="passwordHash" name="passwordHash" required placeholder="Nhập password hash">
+        </div>
+        
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="isActive" value="true" checked>
+                Is Active
+            </label>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Thêm</button>
+            <a href="/admin/accounts" class="btn btn-secondary">Hủy</a>
+        </div>
+    </form>
+</div>
+<%- include('../../partials/footer') %>
+

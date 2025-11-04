@@ -1,0 +1,27 @@
+<%- include('../partials/header') %>
+<div class="card">
+    <h2>Chào mừng đến với Admin Panel</h2>
+    <p>Quản lý dữ liệu LuanPortal</p>
+    
+    <div style="margin-top: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+        <div style="padding: 1.5rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; color: white;">
+            <h3>Customers</h3>
+            <p>Quản lý khách hàng</p>
+            <a href="/admin/customers" class="btn" style="background: white; color: #667eea; margin-top: 1rem;">Xem tất cả</a>
+        </div>
+        
+        <div style="padding: 1.5rem; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 8px; color: white;">
+            <h3>Accounts</h3>
+            <p>Quản lý tài khoản</p>
+            <a href="/admin/accounts" class="btn" style="background: white; color: #f5576c; margin-top: 1rem;">Xem tất cả</a>
+        </div>
+        
+        <div style="padding: 1.5rem; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 8px; color: white;">
+            <h3>Orders</h3>
+            <p>Quản lý đơn hàng</p>
+            <a href="/admin/orders" class="btn" style="background: white; color: #00f2fe; margin-top: 1rem;">Xem tất cả</a>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer') %>
+

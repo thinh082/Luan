@@ -1,0 +1,57 @@
+<%
+const formatDateTimeLocal = (date) => {
+    if (!date) return '';
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const hours = String(d.getHours()).padStart(2, '0');
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+};
+%>
+<%- include('../../partials/header') %>
+<div class="card">
+    <h2>Sửa Order</h2>
+    
+    <form action="/admin/orders/<%= order.Id %>/edit" method="POST">
+        <div class="form-group">
+            <label for="customerId">Customer *</label>
+            <select id="customerId" name="customerId" required>
+                <option value="">-- Chọn Customer --</option>
+                <% if (customers && customers.length > 0) { %>
+                    <% customers.forEach(customer => { %>
+                        <option value="<%= customer.Id %>" <%= customer.Id == order.CustomerId ? 'selected' : '' %>><%= customer.FirstName %> <%= customer.LastName %> (<%= customer.Email %>)</option>
+                    <% }); %>
+                <% } %>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="orderDate">Order Date *</label>
+            <input type="datetime-local" id="orderDate" name="orderDate" value="<%= formatDateTimeLocal(order.OrderDate) %>" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="totalAmount">Total Amount *</label>
+            <input type="number" id="totalAmount" name="totalAmount" step="0.01" min="0" value="<%= order.TotalAmount %>" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="status">Status *</label>
+            <select id="status" name="status" required>
+                <option value="Pending" <%= order.Status === 'Pending' ? 'selected' : '' %>>Pending</option>
+                <option value="Completed" <%= order.Status === 'Completed' ? 'selected' : '' %>>Completed</option>
+                <option value="Cancelled" <%= order.Status === 'Cancelled' ? 'selected' : '' %>>Cancelled</option>
+                <option value="Processing" <%= order.Status === 'Processing' ? 'selected' : '' %>>Processing</option>
+            </select>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+            <a href="/admin/orders" class="btn btn-secondary">Hủy</a>
+        </div>
+    </form>
+</div>
+<%- include('../../partials/footer') %>
+
